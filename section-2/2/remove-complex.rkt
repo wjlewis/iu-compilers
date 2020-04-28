@@ -58,7 +58,7 @@
    (lambda (c)
      (if (atomic? c)
          (k c)
-         (let ([n (gensym 'tmp.)])
+         (let ([n (gensym 'aux.)])
            `(let ([,n ,c])
               ,(k n)))))))
 

@@ -19,7 +19,7 @@
 
 (define (ec e)
   (match e
-    [(? exp?) e]
+    [(? exp?) (ec-tail e)]
     [`(let ([,n1 ,e1]) ,b)
      `(seq (assign ,n1 ,e1)
         ,(ec-tail b))]

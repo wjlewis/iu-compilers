@@ -1,7 +1,7 @@
 #lang racket
 
-(require "tools.rkt")
-(require "env.rkt")
+(require "../../tools/tools.rkt")
+(require "../../tools/env.rkt")
 (provide uniquify)
 
 ;; Ensure that each `let` uses a unique name.
