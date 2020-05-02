@@ -27,11 +27,11 @@
      (w/env ([env get-env])
        (->env (lookup e env)))]
     [`(let ([,n1 ,e1]) ,b)
-     (w/env ([env get-env]
+     (w/env ([ue1 (uniquify-e e1)]
+             [env get-env]
              (let [n1* (fresh-name n1 (map car env))])
              [_ (put-env (extend env n1 n1*))]
-             [ub (uniquify-e b)]
-             [ue1 (uniquify-e e1)])
+             [ub (uniquify-e b)])
        (->env `(let ([,n1* ,ue1])
                  ,ub)))]
     [else (error 'uniquify "Invalid expression: ~a" e)]))

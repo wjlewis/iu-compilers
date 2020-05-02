@@ -16,8 +16,8 @@
  (uniquify
   '(program info (let ([x (let ([x 42]) x)])
                    (- (- x)))))
- '(program info (let ([x (let ([x.1 42]) x.1)])
-                  (- (- x)))))
+ '(program info (let ([x.1 (let ([x 42]) x)])
+                  (- (- x.1)))))
 
 (check-equal?
  (uniquify
@@ -34,3 +34,12 @@
  '(program info (let ([x 4])
                   (let ([y 2])
                     (+ y (- x))))))
+
+(check-equal?
+ (uniquify
+  '(program info (let ([y 42])
+                   (let ([y (- y)])
+                     y))))
+ '(program info (let ([y 42])
+                  (let ([y.1 (- y)])
+                    y.1))))
