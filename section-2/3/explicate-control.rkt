@@ -14,7 +14,7 @@
 (define (explicate-control p)
   (match p
     [`(program ,info ,e)
-     `(program ,info ((start . ,(ec e))))]
+     `(program ,info ((main . ,(ec e))))]
     [else (error 'explicate-control "Invalid program: ~a" p)]))
 
 (define (ec e)

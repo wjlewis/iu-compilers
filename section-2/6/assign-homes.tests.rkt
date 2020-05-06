@@ -13,7 +13,7 @@
                          (addq (var a) (var c))
                          (movq (var c) (reg rax))
                          (jmp conclusion)))))))
- '(program ((locals . (a b c)))
+ '(program ((var-count . 3) (locals . (a b c)))
    ((start . (block () ((movq (int 42) (deref rbp -16))
                         (movq (deref rbp -16) (deref rbp -8))
                         (negq (deref rbp -8))

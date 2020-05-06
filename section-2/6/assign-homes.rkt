@@ -9,7 +9,7 @@
     [`(program ,info ((,labels . ,blocks) ...))
      #:when (assv 'locals info)
      (let ([homes (generate-homes (cdr (assv 'locals info)))])
-       `(program ,info
+       `(program ((var-count . ,(length homes)) ,@info)
          ,(map (lambda (l b)
                  `(,l . ,(assign-homes-in-block b homes)))
                labels blocks)))]

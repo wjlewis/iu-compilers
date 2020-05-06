@@ -1,6 +1,6 @@
 #lang racket
 
-(require "tools.rkt")
+(require "../tools/tools.rkt")
 (provide meaning)
 
 ;; The R1 language
