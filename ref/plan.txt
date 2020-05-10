@@ -1,0 +1,32 @@
+Here's a summary of the trip from R0 to x86-64:
+
+1. (: remove-complex (-> R1 R1))
+   Transform into something that looks like A-Normal Form.
+   Afterwards, all arguments are "simple".
+
+2. (: uniquify (-> R1 R1))
+   Remove all shadowing by renaming names where necessary.
+
+3. (: explicate-control (-> R1 C0))
+   Transform into the assignment-centric C0 language.
+
+4. (: select-insts (-> C0 x86_0*))
+   Transform from C0 to x86_0.
+
+5. (: uncover-locals (-> x86_0* x86_0*))
+   Collect all names in use.
+
+6. (: assign-homes (-> x86_0 x86_0*))
+   Replace each reference to a variable with a reference to a stack
+   location.
+
+7. (: patch-insts (-> x86_0 x86_0))
+   Insert `mov` instructions where necessary to ensure that the result
+   is valid x86.
+
+8. (: prep-blocks (-> x86_0 x86_0))
+   Add an appropriate prelude and postlude to each block. Also, add a
+   `conclusion` block.
+
+9. (: show-x86 (-> x86_0 String))
+   Transform to a string.

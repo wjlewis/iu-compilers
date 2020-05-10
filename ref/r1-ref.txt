@@ -1,0 +1,6 @@
+The R1 language:
+
+Exp  => Int | Name | (read)
+      | (- Exp) | (+ Exp Exp)
+      | (let ([Name Exp]) Exp)
+Prog => (program Info Exp)

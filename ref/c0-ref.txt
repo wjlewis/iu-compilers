@@ -1,0 +1,7 @@
+The C-2 intermediate language:
+
+Arg => Int | Var
+Exp => Arg | (read) | (- Arg) | (+ Arg Arg)
+Stmt => (assign Var Exp)
+Tail => (return Exp) | (seq Stmt Tail)
+Prog => (program Info ((Label . Tail)+))
