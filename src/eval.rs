@@ -6,12 +6,12 @@ type Env = a_list::AList<u32, i32>;
 
 impl Expr {
     pub fn eval(&self) -> Result<i32, &'static str> {
-        self.term.eval(&mut Env::new())
+        self.term.eval(&Env::new())
     }
 }
 
 impl Term {
-    pub fn eval(&self, env: &mut Env) -> Result<i32, &'static str> {
+    pub fn eval(&self, env: &Env) -> Result<i32, &'static str> {
         use Term::*;
         match self {
             Num(v) => Ok(*v),
@@ -23,8 +23,8 @@ impl Term {
                 .and_then(|lv| r.eval(env).and_then(|rv| Ok(lv + rv))),
             Neg(t) => t.eval(env).and_then(|v| Ok(-v)),
             Let(i, t, b) => t.eval(env).and_then(|tv| {
-                env.extend(*i, tv);
-                b.eval(env)
+                let env = env.extend(*i, tv);
+                b.eval(&env)
             }),
         }
     }
@@ -36,4 +36,53 @@ fn read_i32() -> Result<i32, &'static str> {
         .read_line(&mut num)
         .map_err(|_| "Error reading input")
         .and_then(|_| num.trim().parse().map_err(|_| "Invalid number"))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::symbol_table::SymbolTable;
+    use Term::*;
+
+    #[test]
+    fn simple_let() {
+        let e = Expr {
+            term: Let(
+                0,
+                Box::new(Sum(Box::new(Num(3)), Box::new(Num(4)))),
+                Box::new(Neg(Box::new(Name(0)))),
+            ),
+            syms: SymbolTable::new(),
+        };
+
+        assert_eq!(e.eval(), Ok(-7));
+    }
+
+    #[test]
+    fn nested_lets() {
+        let e = Expr {
+            term: Let(
+                0,
+                Box::new(Let(
+                    0,
+                    Box::new(Sum(Box::new(Num(39)), Box::new(Num(3)))),
+                    Box::new(Name(0)),
+                )),
+                Box::new(Name(0)),
+            ),
+            syms: SymbolTable::new(),
+        };
+
+        assert_eq!(e.eval(), Ok(42));
+    }
+
+    #[test]
+    fn unbound() {
+        let e = Expr {
+            term: Neg(Box::new(Sum(Box::new(Name(2)), Box::new(Num(3))))),
+            syms: SymbolTable::new(),
+        };
+
+        assert_eq!(e.eval(), Err("Unbound name"));
+    }
 }
