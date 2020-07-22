@@ -7,6 +7,7 @@ impl Expr {
         C0 {
             // Just one block for now
             blocks: vec![Block {
+                locals: vec![],
                 label: self.syms.gensym("label"),
                 tail: self.term.explicate(&mut self.syms),
             }],

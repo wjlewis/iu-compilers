@@ -7,6 +7,7 @@ pub struct C0 {
 
 #[derive(Debug, PartialEq)]
 pub struct Block {
+    pub locals: Vec<u32>,
     pub label: u32,
     pub tail: Tail,
 }
