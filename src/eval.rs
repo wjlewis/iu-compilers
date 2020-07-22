@@ -1,5 +1,5 @@
-use crate::a_list;
 use crate::expr::{Expr, Term};
+use crate::shared::a_list;
 use std::io;
 
 type Env = a_list::AList<u32, i32>;
@@ -41,7 +41,7 @@ fn read_i32() -> Result<i32, &'static str> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::symbol_table::SymbolTable;
+    use crate::shared::symbol_table::SymbolTable;
     use Term::*;
 
     #[test]

@@ -1,4 +1,4 @@
-use crate::symbol_table::SymbolTable;
+use crate::shared::symbol_table::SymbolTable;
 
 pub struct Expr {
     pub term: Term,

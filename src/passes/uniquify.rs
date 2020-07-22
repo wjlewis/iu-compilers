@@ -1,6 +1,6 @@
-use crate::a_list::AList;
 use crate::expr::{Expr, Term};
-use crate::symbol_table::SymbolTable;
+use crate::shared::a_list::AList;
+use crate::shared::symbol_table::SymbolTable;
 
 impl Expr {
     pub fn uniquify(mut self) -> Result<Expr, &'static str> {
@@ -35,8 +35,8 @@ impl Term {
                     // In this case, we must generate a fresh name and
                     // use it instead
                     Some(_) => {
-                        let name = syms.lookup(*i).ok_or("Unbound name")?;
-                        Ok(syms.gensym(&name.to_owned()))
+                        let name = syms.lookup(*i).ok_or("Unbound name")?.to_owned();
+                        Ok(syms.gensym(&name))
                     }
                     // 2. We haven't used this name yet
                     // Here we can just make a note of the association,
