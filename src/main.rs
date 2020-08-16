@@ -1,8 +1,5 @@
-mod c_0;
-mod eval;
-mod expr;
+mod common;
 mod passes;
-mod shared;
-mod x_86;
+mod terms;
 
 fn main() {}
